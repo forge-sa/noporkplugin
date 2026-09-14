@@ -1,0 +1,22 @@
+name: ${project.name}
+version: ${project.version}
+main: wardarsoplya.nopork.ppr.NoPorkPlugin
+api-version: '26.2'
+description: ${project.description}
+author: wardar
+website: https://github.com/
+folia-supported: true
+
+commands:
+  nopork:
+    description: Manage the NoPork plugin.
+    usage: /nopork reload
+    permission: nopork.admin
+
+permissions:
+  nopork.admin:
+    description: Allows use of /nopork reload.
+    default: op
+  nopork.exempt:
+    description: Players with this permission are never punished for eating pork.
+    default: false

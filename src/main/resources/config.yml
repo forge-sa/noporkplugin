@@ -1,0 +1,61 @@
+# NoPork - punishes players for eating pork, raw or cooked.
+#
+# Server-side only: players do not need to install anything.
+
+# Items that count as "pork". Any Minecraft item id works here.
+foods:
+  - minecraft:porkchop
+  - minecraft:cooked_porkchop
+
+# Potion effects applied on every single pork item eaten.
+# Any effect from the minecraft:mob_effect registry can be listed.
+# amplifier 0 = level I, 1 = level II, ...
+effects:
+  "minecraft:nausea":
+    duration-seconds: 20
+    amplifier: 0
+  "minecraft:weakness":
+    duration-seconds: 20
+    amplifier: 0
+
+# Effects always restart at their full duration when pork is eaten again,
+# even if a longer effect from another source is already active.
+# Set to false to let the vanilla "strongest effect wins" rule apply instead.
+override-existing-effects: true
+
+teleport:
+  enabled: true
+  # 1-in-N chance per pork item eaten. 20 means a 5% chance.
+  chance-denominator: 20
+  # Extra blocks added to the roof height. 0 puts the player on top of the
+  # nether's bedrock ceiling.
+  y-offset: 0
+  # Overworld coordinates are divided by 8 to find the matching nether spot,
+  # exactly like a nether portal. Set false to keep the raw X/Z instead.
+  scale-coordinates: true
+
+# Worlds where pork is punished.
+# mode: all | whitelist | blacklist
+worlds:
+  mode: all
+  list:
+    - world_the_end
+
+# Played to the offending player. Use "" to disable.
+sound:
+  id: minecraft:entity.pig.ambient
+  volume: 1.0
+  pitch: 0.7
+
+# MiniMessage formatted. Use "" to disable any single message.
+# Placeholders: <player>, <item>, <x>, <y>, <z>, <world>
+messages:
+  # Sent to the action bar every time pork is eaten.
+  punished: "<red>Bro haram stop it.</red>"
+  # Sent to chat when the player loses the 1-in-N roll.
+  teleported: "<dark_red>Allah has judged you.</dark_red> <gray>Dropped on the nether roof at <white><x>, <y>, <z></white>.</gray>"
+  # Console/log line for teleports. Use "" to disable.
+  log-teleport: "<player> was teleported to the nether roof at <x>, <y>, <z> in <world>"
+  # Shown when no nether world exists to teleport to.
+  no-nether: "<gray>Something wanted to drag you somewhere, but could not find the way.</gray>"
+  reloaded: "<green>NoPork configuration reloaded.</green>"
